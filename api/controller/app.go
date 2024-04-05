@@ -18,13 +18,13 @@ const (
 type App struct {
 	config  env.Config
 	storage storage.DocumentActions
-	cache   *lru.Cache
+	cache   *lru.LRUCache
 }
 
 func NewApp(
 	config env.Config,
 	storage storage.DocumentActions,
-	cache *lru.Cache,
+	cache *lru.LRUCache,
 ) App {
 	return App{
 		config:  config,

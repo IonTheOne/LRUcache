@@ -113,7 +113,7 @@ func main() {
 	}()
 
 	// Create a new LRU cache
-	cache , err := lru.NewCache(conf.CacheSize)
+	cache , err := lru.NewLRUCache(conf.CacheSize)
 	if err != nil {
 		log.Fatalf("Failed to create cache: %v", err)
 	}
@@ -139,7 +139,7 @@ func main() {
 func newControllers(
 	config env.Config,
 	mongoDriver storage.DocumentActions,
-	cache *lru.Cache,
+	cache *lru.LRUCache,
 ) controller.App {
 	return controller.NewApp(
 		config, mongoDriver, cache)
