@@ -1,7 +1,6 @@
 package storage
 
 import (
-	// "github.com/gofrs/uuid"
 	"github.com/Mlstermass/LRUcache/api/controller/httpentity"
 )
 
