@@ -17,6 +17,7 @@ import (
 	"github.com/Mlstermass/LRUcache/pkg/env"
 	"github.com/Mlstermass/LRUcache/storage"
 	"github.com/Mlstermass/LRUcache/storage/mongodb"
+	"github.com/Mlstermass/LRUcache/pkg/cache/lru"
 )
 
 const (
@@ -111,7 +112,13 @@ func main() {
 		}
 	}()
 
-	ctl := newControllers(conf, mongoDriver)
+	// Create a new LRU cache
+	cache , err := lru.NewCache(conf.CacheSize)
+	if err != nil {
+		log.Fatalf("Failed to create cache: %v", err)
+	}
+
+	ctl := newControllers(conf, mongoDriver, cache)
 
 	r := router.New(ctl, conf)
 
@@ -132,9 +139,10 @@ func main() {
 func newControllers(
 	config env.Config,
 	mongoDriver storage.DocumentActions,
+	cache *lru.Cache,
 ) controller.App {
 	return controller.NewApp(
-		config, mongoDriver)
+		config, mongoDriver, cache)
 }
 
 func getNews(newsServiceURL string) (httpentity.News, error) {

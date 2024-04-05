@@ -17,6 +17,7 @@ type Config struct {
 	AppMongoDBName             string        `envconfig:"APP-MONGODB-NAME" required:"true"`
 	AppMongoCollectionName     string        `envconfig:"APP-MONGO-COLLECTION-NAME" required:"true"`
 	RefreshInterval            time.Duration `envconfig:"REFRESH-INTERVAL" default:"10s"`
+	CacheSize                  int           `envconfig:"CACHE-SIZE" default:"10"`
 }
 
 func LoadConfig(cfg interface{}) {
